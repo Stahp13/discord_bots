@@ -19,10 +19,10 @@ class Clippy(discord_bot):
         discord_bot.__init__(self, __data_path__)
         
     def get_clip(self, channel):
-        return self.get_channel_config(channel.guild.id, channel.id).get('clipped_message', '')
+        return self.get_channel_config(channel).get('clipped_message', '')
 
     def set_clip(self, channel, clipped_message):
-        self.get_channel_config(channel.guild.id, channel.id)['clipped_message'] = clipped_message
+        self.get_channel_config(channel)['clipped_message'] = clipped_message
         self.update_channel_config(channel)
 
     async def clip(self, channel):
