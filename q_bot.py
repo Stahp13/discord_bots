@@ -12,6 +12,8 @@ from qbot_lib.sq_empty import sq_empty
 from qbot_lib.sq_add_admin_role import sq_add_admin_role
 from qbot_lib.sq_remove_admin_role import sq_remove_admin_role
 from qbot_lib.sq_list_admin_roles import sq_list_admin_roles
+from qbot_lib.sq_set_channel import sq_set_channel
+from qbot_lib.sq_get_channel import sq_get_channel
 #from qbot_lib.sq_notify import 
 #from qbot_lib.sq_help import Sq_add
 
@@ -38,7 +40,9 @@ class q_bot(discord_bot):
             'sq!empty':sq_empty(self),
             'sq!add_admin_role':sq_add_admin_role(self),
             'sq!remove_admin_role':sq_remove_admin_role(self),
-            'sq!list_admin_roles':sq_list_admin_roles(self)
+            'sq!list_admin_roles':sq_list_admin_roles(self),
+            'sq!set_channel':sq_set_channel(self),
+            'sq!get_channel':sq_get_channel(self)
         }
         self.queue_size = 8
 
@@ -74,7 +78,7 @@ class q_bot(discord_bot):
             await command.run(message)
             return
 
-        elif message_lowercase == "sq!quit":
+        elif message_lowercase == "sq!quit" and self.member_is_su(message.author):
             await self.close()
         elif message_lowercase.startswith('sq!'):
             await message.channel.send(content = f'{message.author.mention} "{message.content}": Unknown command, type sq!help for help')
