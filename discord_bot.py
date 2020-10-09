@@ -57,9 +57,8 @@ class discord_bot(discord.Client):
         return os.path.join(self.data_directory, "guilds", str(guild_id), "data.p")
 
     def update_guild_config(self, guild):
-        guild_id = guild.id
-        guild_config = self.get_guild_config(guild_id)
-        guild_config_file = self.get_guild_config_file(guild_id)
+        guild_config = self.get_guild_config(guild)
+        guild_config_file = self.get_guild_config_file(guild.id)
         Path(os.path.dirname(guild_config_file)).mkdir(parents=True, exist_ok=True)
         with open(guild_config_file, 'w') as f:
             f.write(json.dumps(guild_config))

@@ -1,15 +1,16 @@
 from .command_interface import command_interface
+from .player_queue import player_queue
+from .sq_show import sq_show
 import discord
 
 class sq_leave:
     def __init__(self, bot):
         self.bot = bot
+        self.queue = player_queue(bot)
+        self.queue_display = sq_show(bot)
     async def run(self, message) -> None:
-        channel = message.channel
-        self.bot.get_queue(channel).pop(message.author.id, None)
-        current_queue = self.bot.get_queue(channel)
-        await self.bot.check_full(channel)
-        await self.bot.queue_show(channel)
+        await self.queue.remove_player(message.channel, message.author)
+        await self.queue_display.run(message)
     def help(self) -> discord.Embed:
         pass
     def short_help(self) -> str:
@@ -17,4 +18,6 @@ class sq_leave:
     def name(self) -> str:
         return 'sq!leave'
     def requires_su(self) -> bool:
+        return False
+    def requires_admin(self) -> bool:
         return False

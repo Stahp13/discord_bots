@@ -11,3 +11,5 @@ class command_interface:
         pass
     def requires_su(self) -> bool:
         pass
+    def requires_admin(self) -> bool:
+        pass

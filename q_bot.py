@@ -3,15 +3,17 @@ import discord
 import os
 from discord_bot import discord_bot
 from qbot_lib.sq_help import sq_help
+from qbot_lib.sq_show import sq_show
 from qbot_lib.sq_join import sq_join
 from qbot_lib.sq_leave import sq_leave
 from qbot_lib.sq_add import sq_add
 from qbot_lib.sq_remove import sq_remove
 from qbot_lib.sq_empty import sq_empty
+from qbot_lib.sq_add_admin_role import sq_add_admin_role
+from qbot_lib.sq_remove_admin_role import sq_remove_admin_role
+from qbot_lib.sq_list_admin_roles import sq_list_admin_roles
 #from qbot_lib.sq_notify import 
 #from qbot_lib.sq_help import Sq_add
-
-queue_size = 8
 
 __location__ = os.path.dirname(os.path.abspath(__file__))
 __data_path__ = os.path.join(__location__, 'data', 'QBot')
@@ -28,56 +30,31 @@ class q_bot(discord_bot):
         discord_bot.__init__(self, __data_path__)
         self.commands = {
             'sq!help':sq_help(self),
+            'sq!show':sq_show(self),
             'sq!join':sq_join(self),
             'sq!leave':sq_leave(self),
             'sq!add':sq_add(self),
             'sq!remove':sq_remove(self),
-            'sq!empty':sq_empty(self)
+            'sq!empty':sq_empty(self),
+            'sq!add_admin_role':sq_add_admin_role(self),
+            'sq!remove_admin_role':sq_remove_admin_role(self),
+            'sq!list_admin_roles':sq_list_admin_roles(self)
         }
+        self.queue_size = 8
 
-    def get_su_roles(self, guild):
-        return self.get_guild_config(guild).setdefault('su_roles', [])
-
-    def add_su_role(self, guild, role):
-        su_roles = self.get_su_roles(guild)
-        if not role in su_roles:
-            su_roles.append(role)
-            self.update_guild_config(guild)
+    def get_admin_roles(self, guild):
+        return self.get_guild_config(guild).setdefault('admin_roles', [])
 
     def member_is_su(self, member):
-        pass
-        #return member.roles in
+        return member.guild_permissions == discord.Permissions.all()
     
-    def get_queue(self, channel):
-        return self.get_channel_temp_data(channel).setdefault('queue', dict())
-
-    def help_embed(self):
-        embed = discord.Embed(title='help', color=discord.Colour.orange())
-        content = """sq!join:   joins queue
-                     sq!leave:  leave queue
-                     sq!show:   shows players in queue, aliases: sq!list, sq!view
-                     sq!remove: removes mentioned players from the queue"""
-        embed.add_field(name=f'commands:', value=content, inline=False)
-        return embed
-    
-    async def queue_show(self, channel):
-        current_queue = self.get_queue(channel)
-        embed = discord.Embed(title=f'Queue {len(current_queue)}/{queue_size}', color=discord.Colour.orange())
-        content=''
-        if len(current_queue) == 0:
-            embed.add_field(name='players:', value='Queue is empty')
-        else:
-            embed_content = ''.join(f'{idx+1}. {user[1].mention}\n' for idx, user in enumerate(current_queue.items()))
-            embed.add_field(name='players:', value=embed_content)
-        await self.temporary_message(channel, content = content, embed=embed)
-    
-    async def check_full(self, channel):
-        current_queue = self.get_queue(channel)
-        if len(current_queue) == queue_size:
-            content = 'players:'+''.join(f' {user.mention}' for _, user in current_queue.items())
-            embed = discord.Embed(title=f'Queue has filled up!', color=discord.Colour.orange())
-            await channel.send(content = content, embed = embed)
-            current_queue.clear()
+    def member_is_admin(self, member):
+        if self.member_is_su(member):
+            return True
+        for role in member.roles:
+            if role.name in get_admin_roles(self, member.guild):
+                return True
+        return False
 
     async def on_message(self, message):
         if message.author == self.user:
@@ -91,14 +68,14 @@ class q_bot(discord_bot):
         command_str = message_lowercase.split(' ')[0]
         command = self.commands.get(command_str, None)
         if command is not None:
+            if (command.requires_su() and not self.member_is_su(message.author)) or (command.requires_admin() and not self.member_is_admin(message.author)):
+                await message.channel.send(content = f'{message.author.mention} "{message.content}": User does not have permissions to do that!')
+                return
             await command.run(message)
             return
 
         elif message_lowercase == "sq!quit":
             await self.close()
-        elif message_lowercase == 'sq!show' or message_lowercase == 'sq!list' or message_lowercase == 'sq!view':
-            self.get_queue(channel)
-            await self.queue_show(message.channel)
         elif message_lowercase.startswith('sq!'):
             await message.channel.send(content = f'{message.author.mention} "{message.content}": Unknown command, type sq!help for help')
             
