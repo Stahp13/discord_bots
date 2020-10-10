@@ -14,6 +14,7 @@ from qbot_lib.sq_remove_admin_role import sq_remove_admin_role
 from qbot_lib.sq_list_admin_roles import sq_list_admin_roles
 from qbot_lib.sq_set_channel import sq_set_channel
 from qbot_lib.sq_get_channel import sq_get_channel
+from qbot_lib.sq_scramble import sq_scramble
 #from qbot_lib.sq_notify import 
 #from qbot_lib.sq_help import Sq_add
 
@@ -42,7 +43,8 @@ class q_bot(discord_bot):
             'sq!remove_admin_role':sq_remove_admin_role(self),
             'sq!list_admin_roles':sq_list_admin_roles(self),
             'sq!set_channel':sq_set_channel(self),
-            'sq!get_channel':sq_get_channel(self)
+            'sq!get_channel':sq_get_channel(self),
+            'sq!scramble':sq_scramble(self)
         }
         self.queue_size = 8
 
@@ -56,7 +58,7 @@ class q_bot(discord_bot):
         if self.member_is_su(member):
             return True
         for role in member.roles:
-            if role.name in get_admin_roles(self, member.guild):
+            if role.name in self.get_admin_roles(member.guild):
                 return True
         return False
 

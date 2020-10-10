@@ -198,7 +198,6 @@ class discord_bot(discord.Client):
                         continue
                     channel_directory = os.path.join(guild_directory, "channels", channel_id_str)
                     self.get_channel_config_by_id(guild_id, channel_id)
-                    print(self.guilds_data[guild_id]['channels'])
                     self.guilds_data[guild_id]['channels'][channel_id]['config'] = self.try_load_json(os.path.join(channel_directory, "config.json"), self.default_channel_config())
                     self.get_channel_data_by_id(guild_id, channel_id)
                     self.guilds_data[guild_id]['channels'][channel_id]['data'] = self.try_load_pickle(os.path.join(channel_directory, "data.p"), self.default_channel_data())

@@ -11,7 +11,7 @@ class sq_remove:
     async def run(self, message) -> None:
         current_queue = self.queue.get_queue(message.channel)
         for member in message.mentions:
-            await self.queue.remove_player(message.channel, message.author)
+            await self.queue.remove_player(message.channel, member)
         await self.queue_display.run(message)
     def help(self) -> discord.Embed:
         pass
