@@ -15,6 +15,7 @@ from qbot_lib.sq_list_admin_roles import sq_list_admin_roles
 from qbot_lib.sq_set_channel import sq_set_channel
 from qbot_lib.sq_get_channel import sq_get_channel
 from qbot_lib.sq_scramble import sq_scramble
+from qbot_lib.sq_notify import sq_notify
 #from qbot_lib.sq_notify import 
 #from qbot_lib.sq_help import Sq_add
 
@@ -44,9 +45,9 @@ class q_bot(discord_bot):
             'sq!list_admin_roles':sq_list_admin_roles(self),
             'sq!set_channel':sq_set_channel(self),
             'sq!get_channel':sq_get_channel(self),
-            'sq!scramble':sq_scramble(self)
+            'sq!scramble':sq_scramble(self),
+            'sq!notify':sq_notify(self)
         }
-        self.queue_size = 8
 
     def get_admin_roles(self, guild):
         return self.get_guild_config(guild).setdefault('admin_roles', [])

@@ -143,7 +143,6 @@ class discord_bot(discord.Client):
                     print("Warning: couldn't delete temporary message: ", sys.exc_info()[0])
             temp_channel_data['temporary_message'] = await channel.send(content = content, embed = embed)
             channel_data['temporary_message'] = temp_channel_data['temporary_message'].id
-            print(channel_data)
             self.update_channel_data(channel)
 
     @staticmethod

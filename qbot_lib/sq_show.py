@@ -10,13 +10,18 @@ class sq_show:
         self.config = queue_config(bot)
     async def run(self, message) -> None:
         current_queue = self.queue.get_queue(message.channel)
-        embed = discord.Embed(title=f'Queue {len(current_queue)}/{self.config.get_queue_size(message.channel)}', color=discord.Colour.orange())
+        queue_size = self.config.get_queue_size(message.channel)
+        embed = discord.Embed(title=f'Queue {len(current_queue)}/{queue_size}', color=discord.Colour.orange())
         content=''
         if len(current_queue) == 0:
-            embed.add_field(name='players:', value='Queue is empty')
+            embed.add_field(name='Players:', value='Queue is empty')
         else:
-            embed_content = ''.join(f'{idx+1}. {user[1].mention}\n' for idx, user in enumerate(current_queue.items()))
-            embed.add_field(name='players:', value=embed_content)
+            user_ids = [user_id for user_id in current_queue.keys()]
+            embed_content = ''.join(f'{idx+1}. {user.mention}\n' for idx, user in enumerate([current_queue[user_id] for user_id in user_ids[:queue_size]]))
+            embed.add_field(name='Players:', value=embed_content)
+            if len(current_queue) > queue_size:
+                embed_content = ''.join(f'{idx+1}. {user.mention}\n' for idx, user in enumerate([current_queue[user_id] for user_id in user_ids[queue_size:]]))
+                embed.add_field(name='Waitlist:', value=embed_content)
         await self.bot.temporary_message(message.channel, content = content, embed=embed)
     def help(self) -> discord.Embed:
         pass

@@ -1,24 +1,49 @@
 from .command_interface import command_interface
-from .notification_config import notification_config
+from .queue_config import queue_config
 import discord
 
 class sq_notify:
     def __init__(self, bot):
         self.bot = bot
         self.config = queue_config(bot)
+        self.ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n//10%10!=1)*(n%10<4)*n%10::4])
     async def run(self, message) -> None:
         split_message = message.content.split(' ')
-        if len(split_message) != 2:
-            await message.channel.send(content = f'{message.author.mention} "{message.content}": exactly one argument is expected! Got: {len(split_message)-1}')
+        if len(split_message) == 2:
+            if(split_message[1] == 'stop'):
+                self.config.set_notification_config(message.channel, message.author, 0, 0)
+                await message.channel.send(content = f'{message.author.mention} Queue Bot will not send you notifications in DM')
+                return
+            else:
+                await message.channel.send(content = f'{message.author.mention} Unknown command or to few arguments, type sq!help notify for details')
+                return
+        if len(split_message) != 3:
+            await message.channel.send(content = f'{message.author.mention} "{message.content}": one or two argument are expected! Got: {len(split_message)-1}')
             return
-        integer_value = None
+        
+        number_of_players = None
+        minimum_delay = None
         try:
-            integer_value = int(split_message[1])
+            number_of_players = int(split_message[1])
         except:
             await message.channel.send(content = f'{message.author.mention} "{message.content}": Could not convert "{split_message[1]}" to integer!')
             return
-        self.config.set_notification_config(message.channel, message.author, +integer_value)
-        await message.channel.send(content = f'{message.author.mention}: succesfully set notify threshold to {integer_value}')
+        try:
+            minimum_delay = int(split_message[2])
+        except:
+            await message.channel.send(content = f'{message.author.mention} "{message.content}": Could not convert "{split_message[2]}" to integer!')
+            return
+        
+        self.config.set_notification_config(message.channel, message.author, number_of_players, minimum_delay)
+        content = ''
+        if number_of_players <= 0 or number_of_players > self.config.get_queue_size(message.channel):
+            content = f'{message.author.mention} Queue Bot will not send you notifications in DM'
+        else:
+            content = f'{message.author.mention}: Queue Bot will now send you DM whenever following conditions are satisfied:\n'
+            content += f'1) {self.ordinal(number_of_players)} player has joined the queue\n'
+            content += f'2) Queue Bot has not sent you a notification from this channel in past {minimum_delay} minute(s)\n'
+            content += f'3) You are not in the queue'
+        await message.channel.send(content = content)
     def help(self) -> discord.Embed:
         pass
     def short_help(self) -> str:
