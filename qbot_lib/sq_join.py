@@ -18,7 +18,7 @@ class sq_join:
         embed.add_field(name=f'syntax: sq!join', value=content, inline=False)
         return embed
     def short_help(self) -> str:
-        return 'Adds message author to the queue'
+        return 'enter queue'
     def name(self) -> str:
         return 'sq!join'
     def requires_su(self) -> bool:
