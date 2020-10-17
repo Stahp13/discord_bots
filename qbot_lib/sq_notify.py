@@ -39,15 +39,21 @@ class sq_notify:
         if number_of_players <= 0 or number_of_players > self.config.get_queue_size(message.channel):
             content = f'{message.author.mention} Queue Bot will not send you notifications in DM'
         else:
-            content = f'{message.author.mention}: Queue Bot will now send you DM whenever following conditions are satisfied:\n'
-            content += f'1) {self.ordinal(number_of_players)} player has joined the queue\n'
+            content = f'{message.author.mention}: Queue Bot will notify you via private message whenever the following conditions are satisfied:\n'
+            content += f'1) {self.ordinal(number_of_players)} players are in the queue\n'
             content += f'2) Queue Bot has not sent you a notification from this channel in past {minimum_delay} minute(s)\n'
             content += f'3) You are not in the queue'
         await message.channel.send(content = content)
     def help(self) -> discord.Embed:
-        pass
+        embed = discord.Embed(title='help', color=discord.Colour.orange())
+        content = """example: "sq!notify 7 60" or "sq!notify 0 0"
+        This command expects the arguments of the queue size you wish to be notified of followed by the time threshold you wish to be notified (i.e. enter 240 if you only want to receive messages every four hours). To disable notifications, enter "0" for both arguments.
+        This command is used to subscribe to the queue bot private message feature that will DM users who wish to receive notifications when the queue reaches the desired number of users. Direct messages must be enabled by the user for the server the bot is hosted on.
+        """
+        embed.add_field(name=f'syntax: sq!notify <queue_size> <interval_minutes>', value=content, inline=False)
+        return embed
     def short_help(self) -> str:
-        return 'Sets notification settings for user'
+        return 'notifies players when the queue reaches selected capacity'
     def name(self) -> str:
         return 'sq!notify'
     def requires_su(self) -> bool:
