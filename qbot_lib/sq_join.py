@@ -13,7 +13,7 @@ class sq_join:
         await self.queue_display.run(message)
     def help(self) -> discord.Embed:
         embed = discord.Embed(title='help', color=discord.Colour.orange())
-        content = """This command is used by users to join the queue.
+        content = """This command is used to join the queue.
         """
         embed.add_field(name=f'syntax: sq!join', value=content, inline=False)
         return embed
