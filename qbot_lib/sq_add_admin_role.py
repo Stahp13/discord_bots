@@ -22,7 +22,7 @@ class sq_add_admin_role:
             await message.channel.send(content = f'{message.author.mention} "{message.content}": "{role}" is already in admin roles!')
     def help(self) -> discord.Embed:
         embed = discord.Embed(title='help', color=discord.Colour.orange())
-        content = """Example: "sq!add_admin_role Mods"
+        content = """example: "sq!add_admin_role Mods"
         This command is used to grant Queue Bot admin permissions to a role/rank within the Discord server. Discord server administrators by default have super user permissions.
         """
         embed.add_field(name=f'syntax: sq!add_admin_role <role>', value=content, inline=False)
