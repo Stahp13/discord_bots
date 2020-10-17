@@ -37,11 +37,10 @@ class sq_help:
             await message.channel.send(embed=embed)
     def help(self) -> discord.Embed:
         embed = discord.Embed(title='help', color=discord.Colour.orange())
-        content = """syntax: sq!help [command]
-        When used without additional arguments displays list of commands.
-        When "command" argument is passed displays detailed info about given command
+        content = """example: "sq!help" or "sq!help notify"
+        This command when used without additional arguments displays the list of available commands to the respective user. When supplied with the argument of a command's suffix, the syntax and attributes of that command are displayed.
         """
-        embed.add_field(name=f'Usage:', value=content, inline=False)
+        embed.add_field(name=f'syntax: sq!help or sq!help <command>', value=content, inline=False)
         return embed
     def short_help(self) -> str:
         return 'type sq!help <command> for extra info'
