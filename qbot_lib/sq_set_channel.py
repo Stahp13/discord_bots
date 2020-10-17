@@ -19,7 +19,12 @@ class sq_set_channel:
         else:
             await message.channel.send(content = f'{message.author.mention} "{message.content}": "{config_name}" is not a recognized config')
     def help(self) -> discord.Embed:
-        pass
+        embed = discord.Embed(title='help', color=discord.Colour.orange())
+        content = """example: "sq!set_channel queue_size 8"
+        This command is used to set: the size of the queue "queue_size" to an amount greater than 1; whether or not the queue should empty (1) or stay full (0) upon filling "queue_reset".
+        """
+        embed.add_field(name=f'syntax: sq!set_channel <attribute> <parameter>', value=content, inline=False)
+        return embed
     def short_help(self) -> str:
         return 'sets value of given config field for channel'
     def name(self) -> str:
