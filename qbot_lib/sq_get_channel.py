@@ -17,7 +17,12 @@ class sq_get_channel:
         else:
             await message.channel.send(content = f'{message.author.mention} "{message.content}": "{config_name}" is not a recognized config')
     def help(self) -> discord.Embed:
-        pass
+        embed = discord.Embed(title='help', color=discord.Colour.orange())
+        content = """example: "sq!get_channel queue_size"
+        This command is used to obtain the parameters assigned to the "queue_size" and "queue_reset" attributes.
+        """
+        embed.add_field(name=f'syntax: sq!get_channel <attribute>', value=content, inline=False)
+        return embed
     def short_help(self) -> str:
         return 'gets value of given config field for channel'
     def name(self) -> str:
