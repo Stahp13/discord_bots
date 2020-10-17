@@ -25,7 +25,7 @@ class sq_remove_admin_role:
         embed.add_field(name=f'syntax: sq!remove_admin_role <role>', value=content, inline=False)
         return embed
     def short_help(self) -> str:
-        return 'assign elevated privileges'
+        return 'revoke elevated privileges'
     def name(self) -> str:
         return 'sq!remove_admin_role'
     def requires_su(self) -> bool:
