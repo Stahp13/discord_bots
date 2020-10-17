@@ -15,8 +15,8 @@ class sq_remove:
         await self.queue_display.run(message)
     def help(self) -> discord.Embed:
         embed = discord.Embed(title='help', color=discord.Colour.orange())
-        content = """example: "sq!remove @JohnSmith"
-        This command is used to remove a user from the queue. This command requires queue bot elevated privileges.
+        content = """example: "sq!remove @JohnDoe @JaneDoe"
+        This command is used to remove a user from the queue. This command accepts multiple arguments. This command requires queue bot elevated privileges.
         """
         embed.add_field(name=f'syntax: sq!remove <user>', value=content, inline=False)
         return embed
