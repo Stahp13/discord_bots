@@ -28,7 +28,7 @@ class sq_add_admin_role:
         embed.add_field(name=f'syntax: sq!add_admin_role <role>', value=content, inline=False)
         return embed
     def short_help(self) -> str:
-        return 'Allows members with given role to manage q_bot'
+        return 'assign elevated privileges'
     def name(self) -> str:
         return 'sq!add_admin_role'
     def requires_su(self) -> bool:
