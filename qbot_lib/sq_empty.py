@@ -12,9 +12,13 @@ class sq_empty:
         self.queue.get_queue(message.channel).clear()
         await self.queue_display.run(message)
     def help(self) -> discord.Embed:
-        pass
+        embed = discord.Embed(title='help', color=discord.Colour.orange())
+        content = """This command is used to remove all users from the queue. This command requires queue bot elevated privileges.
+        """
+        embed.add_field(name=f'syntax: sq!empty', value=content, inline=False)
+        return embed
     def short_help(self) -> str:
-        return 'Removes all players from the queue'
+        return 'removes all players from queue'
     def name(self) -> str:
         return 'sq!empty'
     def requires_su(self) -> bool:
