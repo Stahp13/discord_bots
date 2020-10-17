@@ -14,7 +14,12 @@ class sq_add:
             await self.queue.add_player(message.channel, member)
         await self.queue_display.run(message)
     def help(self) -> discord.Embed:
-        pass
+        embed = discord.Embed(title='help', color=discord.Colour.orange())
+        content = """example: "sq!add @JohnDoe @JaneDoe"
+        This command is used to add a user to the queue. This command accepts multiple arguments. This command requires queue bot elevated privileges.
+        """
+        embed.add_field(name=f'syntax: sq!add <user>', value=content, inline=False)
+        return embed
     def short_help(self) -> str:
         return 'adds mentioned players to the queue'
     def name(self) -> str:
