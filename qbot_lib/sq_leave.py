@@ -12,7 +12,11 @@ class sq_leave:
         await self.queue.remove_player(message.channel, message.author)
         await self.queue_display.run(message)
     def help(self) -> discord.Embed:
-        pass
+        embed = discord.Embed(title='help', color=discord.Colour.orange())
+        content = """This command is used by users to leave the queue.
+        """
+        embed.add_field(name=f'syntax: sq!leave', value=content, inline=False)
+        return embed
     def short_help(self) -> str:
         return 'Removes message author from the queue'
     def name(self) -> str:
