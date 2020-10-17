@@ -46,8 +46,8 @@ class sq_notify:
         await message.channel.send(content = content)
     def help(self) -> discord.Embed:
         embed = discord.Embed(title='help', color=discord.Colour.orange())
-        content = """example: "sq!notify 7 60" or "sq!notify 0 0"
-        This command expects the arguments of the queue size you wish to be notified of followed by the time threshold you wish to be notified (i.e. enter 240 if you only want to receive messages every four hours). To disable notifications, enter "0" for both arguments.
+        content = """example: "sq!notify 7 60" or "sq!notify stop"
+        This command expects the arguments of the queue size you wish to be notified of followed by the time threshold you wish to be notified (i.e. enter 240 if you only want to receive messages every four hours). To disable notifications, enter the "stop" argument.
         This command is used to subscribe to the queue bot private message feature that will DM users who wish to receive notifications when the queue reaches the desired number of users. Direct messages must be enabled by the user for the server the bot is hosted on.
         """
         embed.add_field(name=f'syntax: sq!notify <queue_size> <interval_minutes>', value=content, inline=False)
