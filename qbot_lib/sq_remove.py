@@ -21,7 +21,7 @@ class sq_remove:
         embed.add_field(name=f'syntax: sq!remove <user>', value=content, inline=False)
         return embed
     def short_help(self) -> str:
-        return 'adds mentioned players to the queue'
+        return 'removes mentioned players from the queue'
     def name(self) -> str:
         return 'sq!remove'
     def requires_su(self) -> bool:
