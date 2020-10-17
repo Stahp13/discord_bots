@@ -12,7 +12,11 @@ class sq_join:
         await self.queue.add_player(message.channel, message.author)
         await self.queue_display.run(message)
     def help(self) -> discord.Embed:
-        pass
+        embed = discord.Embed(title='help', color=discord.Colour.orange())
+        content = """This command is used by users to join the queue.
+        """
+        embed.add_field(name=f'syntax: sq!join', value=content, inline=False)
+        return embed
     def short_help(self) -> str:
         return 'Adds message author to the queue'
     def name(self) -> str:
