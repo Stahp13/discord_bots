@@ -18,7 +18,7 @@ class sq_leave:
         embed.add_field(name=f'syntax: sq!leave', value=content, inline=False)
         return embed
     def short_help(self) -> str:
-        return 'Removes message author from the queue'
+        return 'exit queue'
     def name(self) -> str:
         return 'sq!leave'
     def requires_su(self) -> bool:
