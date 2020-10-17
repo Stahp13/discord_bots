@@ -39,7 +39,7 @@ class sq_notify:
         if number_of_players <= 0 or number_of_players > self.config.get_queue_size(message.channel):
             content = f'{message.author.mention} Queue Bot will not send you notifications in DM'
         else:
-            content = f'{message.author.mention}: Queue Bot will notify you via private message whenever the following conditions are satisfied:\n'
+            content = f'{message.author.mention}: Queue Bot will now notify you via private message whenever the following conditions are satisfied:\n'
             content += f'1) {self.ordinal(number_of_players)} players are in the queue\n'
             content += f'2) Queue Bot has not sent you a notification from this channel in past {minimum_delay} minute(s)\n'
             content += f'3) You are not in the queue'
