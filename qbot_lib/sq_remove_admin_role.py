@@ -18,7 +18,12 @@ class sq_remove_admin_role:
         else:
             await message.channel.send(content = f'{message.author.mention} "{message.content}": "{role}" is not in admin roles!')
     def help(self) -> discord.Embed:
-        pass
+        embed = discord.Embed(title='help', color=discord.Colour.orange())
+        content = """example: "sq!remove_admin_role Mods"
+        This command is used to revoke Queue Bot admin permissions from a role/rank within the Discord server. Discord server administrators by default have super user permissions.
+        """
+        embed.add_field(name=f'syntax: sq!remove_admin_role <role>', value=content, inline=False)
+        return embed
     def short_help(self) -> str:
         return 'Being assigned given role will no longer allow for accessing admin commands'
     def name(self) -> str:
