@@ -18,9 +18,13 @@ class sq_scramble:
         team_B = 'team B:'+''.join(f' {q_values[user_idx].mention}' for user_idx in shuffled_indices[half_size:half_size*2])
         await message.channel.send(content = f'{team_A}\n{team_B}')
     def help(self) -> discord.Embed:
-        pass
+        embed = discord.Embed(title='help', color=discord.Colour.orange())
+        content = """This command is used to generate shuffled team compositions.
+        """
+        embed.add_field(name=f'syntax: sq!scramble', value=content, inline=False)
+        return embed
     def short_help(self) -> str:
-        return 'Scrambles teams'
+        return 'shuffles teams'
     def name(self) -> str:
         return 'sq!scramble'
     def requires_su(self) -> bool:
