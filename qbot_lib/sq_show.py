@@ -30,7 +30,7 @@ class sq_show:
         embed.add_field(name=f'syntax: sq!show', value=content, inline=False)
         return embed
     def short_help(self) -> str:
-        return 'shows current queue'
+        return 'display queue'
     def name(self) -> str:
         return 'sq!show'
     def requires_su(self) -> bool:
