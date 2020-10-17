@@ -13,7 +13,7 @@ class sq_leave:
         await self.queue_display.run(message)
     def help(self) -> discord.Embed:
         embed = discord.Embed(title='help', color=discord.Colour.orange())
-        content = """This command is used by users to leave the queue.
+        content = """This command is used to leave the queue.
         """
         embed.add_field(name=f'syntax: sq!leave', value=content, inline=False)
         return embed
