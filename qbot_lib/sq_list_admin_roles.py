@@ -16,9 +16,13 @@ class sq_list_admin_roles:
             await message.channel.send(content='', embed=embed)
 
     def help(self) -> discord.Embed:
-        pass
+        embed = discord.Embed(title='help', color=discord.Colour.orange())
+        content = """This command is used to display the roles that have access to queue bot admin features.
+        """
+        embed.add_field(name=f'syntax: sq!list_admin_roles', value=content, inline=False)
+        return embed
     def short_help(self) -> str:
-        return 'list roles which members can execute admin commands for q_bot'
+        return 'list roles that have elevated privileges'
     def name(self) -> str:
         return 'sq!list_admin_roles'
     def requires_su(self) -> bool:
