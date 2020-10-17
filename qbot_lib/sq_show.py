@@ -24,7 +24,12 @@ class sq_show:
                 embed.add_field(name='Waitlist:', value=embed_content)
         await self.bot.temporary_message(message.channel, content = content, embed=embed)
     def help(self) -> discord.Embed:
-        pass
+        embed = discord.Embed(title='help', color=discord.Colour.orange())
+        content = """example: "sq!show"
+        This command is used to display the queue.
+        """
+        embed.add_field(name=f'syntax: sq!show', value=content, inline=False)
+        return embed
     def short_help(self) -> str:
         return 'shows current queue'
     def name(self) -> str:
