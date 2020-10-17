@@ -30,4 +30,4 @@ class sq_scramble:
     def requires_su(self) -> bool:
         return False
     def requires_admin(self) -> bool:
-        return False
+        return True
