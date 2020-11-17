@@ -10,8 +10,8 @@ def create_dict():
     return dict()
 
 class discord_bot(discord.Client):
-    def __init__(self, data_directory):
-        discord.Client.__init__(self)
+    def __init__(self, data_directory, intents = discord.Intents.default()):
+        discord.Client.__init__(self, intents = intents)
         # serializable data
         self.guilds_data = dict()
         # locks

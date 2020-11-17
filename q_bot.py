@@ -30,8 +30,8 @@ elif len(sys.argv) > 2:
 TOKEN = sys.argv[1]
 
 class q_bot(discord_bot):
-    def __init__(self):
-        discord_bot.__init__(self, __data_path__)
+    def __init__(self, intents):
+        discord_bot.__init__(self, __data_path__, intents)
         self.commands = {
             'sq!help':sq_help(self),
             'sq!show':sq_show(self),
@@ -86,6 +86,9 @@ class q_bot(discord_bot):
         elif message_lowercase.startswith('sq!'):
             await message.channel.send(content = f'{message.author.mention} "{message.content}": Unknown command, type sq!help for help')
             
-
-client = q_bot()
+intents = discord.Intents.default()
+intents.typing = False
+intents.members = True
+intents.presences = True
+client = q_bot(intents)
 client.run(TOKEN)
